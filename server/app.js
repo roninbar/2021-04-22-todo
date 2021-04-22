@@ -43,7 +43,7 @@ app.post('/api/todo', function(req, res) {
         when: req.body.when,
         complete: false,
     });
-    return res.sendStatus(201);
+    return res.set('Location', `/api/todo/${items.length - 1}`).sendStatus(201);
 });
 
 module.exports = app;
