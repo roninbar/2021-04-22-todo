@@ -3,8 +3,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const items = [
+    {
+        what: 'Buy milk',
+        when: '2021-04-23',
+        complete: false,
+    },
+    {
+        what: 'Wash the floor',
+        when: '2021-04-23',
+        complete: false,
+    },
+    {
+        what: 'Buy JS book',
+        when: '2021-04-23',
+        complete: false,
+    },
+];
 
 var app = express();
 
@@ -14,7 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get('/api/todo', function (req, res) {
+    return res.json(items);
+});
 
 module.exports = app;
