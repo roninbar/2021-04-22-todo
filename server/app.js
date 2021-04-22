@@ -1,7 +1,10 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const debug = require('debug');
+
+const log = debug('server:api');
 
 const items = [
     {
@@ -31,6 +34,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/todo', function (req, res) {
     return res.json(items);
+});
+
+app.post('/api/todo', function(req, res) {
+    log(req.body);
+    items.push({
+        what: req.body.what,
+        when: req.body.when,
+        complete: false,
+    });
+    return res.sendStatus(201);
 });
 
 module.exports = app;
